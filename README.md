@@ -1,8 +1,6 @@
 # NewsApi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/news_api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+An API wrapper for [News API v2](https://newsapi.org/)
 
 ## Installation
 
@@ -20,19 +18,61 @@ Or install it yourself as:
 
     $ gem install news_api
 
+## Configuration
+
+Add setting with your [API key](https://newsapi.org/register).
+
+```ruby
+NewsApi::Settings.configure do |config|
+  config.api_key = 'your_api_key'
+end
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+News API has 2 main [endpoints](https://newsapi.org/docs/endpoints) and 1 minor endpoint.
 
-## Development
+[Read more](https://newsapi.org/docs/endpoints) about required and available params.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Each request below returns instance of [ApiStruct::Entity](https://github.com/rubygarage/api_struct#entity)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+### [Top headlines](https://newsapi.org/docs/endpoints/top-headlines)
+
+```ruby
+NewsApi::TopHeadliners.search(country: :us, pageSize: 2)
+```
+
+### [Everything](https://newsapi.org/docs/endpoints/everything)
+
+```ruby
+NewsApi::Everything.search(q: 'bitcoin', pageSize: 2)
+```
+
+### [Sources](https://newsapi.org/docs/endpoints/sources)
+
+```ruby
+NewsApi::Sources.search
+```
+
+## Errors handling
+
+Each result respond on methods `.failure?` and '.success?'.
+
+For example you have invalid API key:
+
+```ruby
+NewsApi::Settings.configure do |config|
+  config.api_key = 'fail_key'
+end
+
+NewsApi::Sources.search
+
+=> #<Hashie::Mash body=#<Hashie::Mash code="apiKeyInvalid" message="Your API key is invalid or incorrect. Check your key, or go to https://newsapi.org to create a free API key." status="error"> error=true status=#<HTTP::Response::Status 401 Unauthorized>>
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/kirillweb/news_api.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kirillshevch/news_api.
 
 ## License
 
