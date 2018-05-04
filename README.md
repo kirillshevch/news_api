@@ -56,7 +56,7 @@ NewsApi::Sources.search
 
 ## Errors handling
 
-Each result respond on methods `.failure?` and '.success?'.
+Each result respond on methods `.failure?` and `.success?`.
 
 For example you have invalid API key:
 
