@@ -66,7 +66,6 @@ NewsApi::Settings.configure do |config|
 end
 
 NewsApi::Sources.search
-
 => #<Hashie::Mash body=#<Hashie::Mash code="apiKeyInvalid" message="Your API key is invalid or incorrect. Check your key, or go to https://newsapi.org to create a free API key." status="error"> error=true status=#<HTTP::Response::Status 401 Unauthorized>>
 ```
 
